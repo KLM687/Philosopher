@@ -12,6 +12,22 @@
 
 #include "philo.h"
 
+bool 	ft_isdigit(char *str)
+{
+	int	i;
+	int c;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		c = str[i];
+		if (c < '0' && c > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	ft_atoi(const char *str)
 {
 	int			i;

@@ -18,15 +18,15 @@ int	parse(int argc, char **argv)
 {
 	if (argc != 6)
 		return (0);
-	if (ft_atoi(argv[1]) < 3)
+	if (ft_atoi(argv[1]) < 3 && !ft_isdigit(argv[1]))
 		return (0);
-	if (ft_atoi(argv[2]) <= 0)
+	if (ft_atoi(argv[2]) <= 0 && !ft_isdigit(argv[2]))
 		return (0);
-	if (ft_atoi(argv[3]) <= 0)
+	if (ft_atoi(argv[3]) <= 0 && !ft_isdigit(argv[3]))
 		return (0);
-	if (ft_atoi(argv[4]) <= 0)
+	if (ft_atoi(argv[4]) <= 0 && !ft_isdigit(argv[4]))
 		return (0);
-	if (ft_atoi(argv[5]) <= 0)
+	if (ft_atoi(argv[5]) <= 0 && !ft_isdigit(argv[5]))
 		return (0);
 	return (1);
 }
@@ -59,7 +59,8 @@ int main(int argc, char **argv)
         return (0);
     }
     philo = create_list(argv, philo);
-	start_thread(philo, ft_atoi(argv[1]));
+	philo = create_mutex(argv, philo);
+	//start_thread(philo, ft_atoi(argv[1]));
 	//ft_lstclear(&philo);
 	return (0);
 }

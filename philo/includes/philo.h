@@ -19,6 +19,7 @@
 # include <pthread.h>
 # include <string.h>
 # include <sys/time.h>
+# include <stdbool.h>
 
 typedef struct s_list
 {
@@ -28,7 +29,7 @@ typedef struct s_list
 	int				eat;
 	int				sleep;
 	int				occ;
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	fork_mutex;
 	pthread_mutex_t	r_mutex;
 	pthread_mutex_t	l_mutex;
 	struct timeval	start;
@@ -41,5 +42,6 @@ int		ft_atoi(const char *str);
 void	start_thread(t_list *philo, int nb_philo);
 void 	ft_msleep(int ms, struct timeval start);
 int		chrono(struct timeval start, struct timeval stop, struct timeval diff);
+t_list	*create_mutex(char **argv, t_list *philo);
 
 #endif

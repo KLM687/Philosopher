@@ -21,7 +21,6 @@ void	*philo_life(void *arg)
 	i = 0;
 	while (i < 1)
 	{
-		pthread_mutex_lock(&philo->mutex);
 		if (philo->next->fork == 1 && philo->previous->fork == 1)
 		{
 			printf("philo %d\n",philo->philo);
@@ -35,7 +34,6 @@ void	*philo_life(void *arg)
 			i++;
 			printf("philo %d stop eating\n", philo->philo);
 		}
-		pthread_mutex_unlock(&philo->mutex);
 		ft_msleep(1000, philo->start);
 	}
 	printf("philo %d is leaving\n", philo->philo);
@@ -46,18 +44,15 @@ void	start_thread(t_list *philo, int nb_philo)
 {
 	int				i;
 	pthread_t 		*tmp_thread;
-	pthread_mutex_t	tmp_mutex;
 	struct timeval	tmp_start;
 
 	i = -1;
 	tmp_thread = malloc(sizeof(pthread_t) * nb_philo);
 	memset(tmp_thread, 0, nb_philo + 1);
 	gettimeofday(&tmp_start, NULL);
-	pthread_mutex_init(&tmp_mutex, NULL);
 	while (++i < nb_philo)
 	{
 		philo->start = tmp_start;
-		philo->mutex = tmp_mutex;
 		pthread_create(tmp_thread + i, NULL, &philo_life, philo);
 		philo = philo->next;
 	}
