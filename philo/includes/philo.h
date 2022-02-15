@@ -22,18 +22,24 @@
 
 typedef struct s_list
 {
-    int philo;
-    int fork;
-	int die;
-	int eat;
-	int sleep;
-	int occ;
-    struct s_list *next;
-    struct s_list *previous;
+    int				philo;
+    int				fork;
+	int				die;
+	int				eat;
+	int				sleep;
+	int				occ;
+	pthread_mutex_t	mutex;
+	pthread_mutex_t	r_mutex;
+	pthread_mutex_t	l_mutex;
+	struct timeval	start;
+    struct s_list 	*next;
+    struct s_list 	*previous;
 }   t_list;
 
 t_list	*create_list(char **argv, t_list *philo);
 int		ft_atoi(const char *str);
 void	start_thread(t_list *philo, int nb_philo);
+void 	ft_msleep(int ms, struct timeval start);
+int		chrono(struct timeval start, struct timeval stop, struct timeval diff);
 
 #endif
