@@ -12,51 +12,77 @@
 
 #include "philo.h"
 
+
+
 void	*philo_life(void *arg)
 {
-	t_list			*philo;
-	int				i;
-
+	usleep(500);
+	t_list	*philo;
+	
 	philo = (t_list *)arg;
-	i = 0;
-	while (i < 1)
-	{
-		if (philo->next->fork == 1 && philo->previous->fork == 1)
-		{
-			printf("philo %d\n",philo->philo);
-			printf("%d  %d\n",philo->next->fork, philo->previous->fork);
-			philo->next->fork = 0;
- 			philo->previous->fork = 0;
-			printf("philo %d is eating\n", philo->philo);
-			ft_msleep(500, philo->start);
-			philo->next->fork = 1;
-			philo->previous->fork = 1;
-			i++;
-			printf("philo %d stop eating\n", philo->philo);
-		}
-		ft_msleep(1000, philo->start);
-	}
-	printf("philo %d is leaving\n", philo->philo);
+	gettimeofday(&philo->stop, NULL);
+	printf("%d %d philo launch\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
 	return (0);
+}
+
+void	synch_time(t_list *philo, int nb_philo)
+{
+	int	i;
+	struct timeval origin_start;
+
+	i = 0;
+	gettimeofday(&origin_start, NULL);
+	while (i < nb_philo)
+	{
+		philo->start = origin_start;
+		philo = philo->next;
+		i++;
+	}
+}
+
+bool	launch_thread(pthread_t *tmp_thread, t_list *philo, int nb_philo)
+{
+	int i;
+	int c;
+
+	i = 0;
+	c = 0;
+	while (i < nb_philo)
+	{
+		if ((philo->philo % 2) == 0)
+			pthread_create(tmp_thread + c++, NULL, &philo_life, philo);
+		philo = philo->next;
+		i++;
+		
+	}
+	i = 0;
+	while (i < nb_philo)
+	{
+		if ((philo->philo % 2) != 0)
+			pthread_create(tmp_thread + c++, NULL, &philo_life, philo);
+		philo = philo->next;
+		i++;
+	}
+	return (1);
 }
 
 void	start_thread(t_list *philo, int nb_philo)
 {
 	int				i;
 	pthread_t 		*tmp_thread;
-	struct timeval	tmp_start;
 
-	i = -1;
+	i = 0;
 	tmp_thread = malloc(sizeof(pthread_t) * nb_philo);
 	memset(tmp_thread, 0, nb_philo + 1);
-	gettimeofday(&tmp_start, NULL);
-	while (++i < nb_philo)
+	synch_time(philo, nb_philo);
+	if (launch_thread(tmp_thread, philo, nb_philo))
 	{
-		philo->start = tmp_start;
-		pthread_create(tmp_thread + i, NULL, &philo_life, philo);
-		philo = philo->next;
+		while (i < nb_philo)
+		{
+			pthread_join(tmp_thread[i], NULL);
+			synch_time(philo, nb_philo);
+			i++;
+		}
 	}
-	i = -1;
-	while (++i < nb_philo)
-		pthread_join(tmp_thread[i], NULL);
+	free(tmp_thread);
 }

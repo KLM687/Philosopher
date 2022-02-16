@@ -21,7 +21,7 @@ bool 	ft_isdigit(char *str)
 	while (str[i] != '\0')
 	{
 		c = str[i];
-		if (c < '0' && c > '9')
+		if (c < '0' || c > '9')
 			return (0);
 		i++;
 	}

@@ -51,6 +51,7 @@ t_list	*ft_lstnew(int content, char **argv)
 		return (0);
 	if (tmp)
 	{
+		tmp->start_life = 1;
 		tmp->philo = content;
 		tmp->fork = 1;
 		tmp->die = ft_atoi(argv[2]);
@@ -80,5 +81,6 @@ t_list *create_list(char **argv, t_list *philo)
 	philo->previous = ft_lstlast(philo);
 	philo = philo->previous;
 	philo->next = tmp;
+	philo = philo->next;
 	return (philo);
 }
