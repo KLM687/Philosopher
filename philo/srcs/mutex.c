@@ -27,8 +27,8 @@ t_list	*create_mutex(char **argv, t_list *philo)
 	i = -1;
 	while (++i < nb_philo)
 	{
-		philo->l_mutex = philo->previous->fork_mutex;
-		philo->r_mutex = philo->next->fork_mutex;
+		philo->l_mutex = &philo->previous->fork_mutex;
+		philo->r_mutex = &philo->next->fork_mutex;
 		philo = philo->next;
 	}
 	return (philo);

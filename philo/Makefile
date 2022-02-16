@@ -1,6 +1,6 @@
 NAME= philo
 
-SRCS= main.c utils.c create.c start_thread.c timestamp.c mutex.c \
+SRCS= main.c utils.c create.c start_thread.c timestamp.c mutex.c philo_life.c \
 
 OBJS= $(addprefix srcs/,$(SRCS:.c=.o))
 

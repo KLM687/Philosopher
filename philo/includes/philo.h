@@ -31,8 +31,8 @@ typedef struct s_list
 	int				sleep;
 	int				occ;
 	pthread_mutex_t	fork_mutex;
-	pthread_mutex_t	r_mutex;
-	pthread_mutex_t	l_mutex;
+	pthread_mutex_t	*r_mutex;
+	pthread_mutex_t	*l_mutex;
 	struct timeval	start;
 	struct timeval	stop;
 	struct timeval	dif;
@@ -47,5 +47,6 @@ void 	ft_msleep(int ms, struct timeval start);
 int		chrono(struct timeval start, struct timeval stop, struct timeval diff);
 t_list	*create_mutex(char **argv, t_list *philo);
 bool 	ft_isdigit(char *str);
+void	*philo_life(void *arg);
 
 #endif

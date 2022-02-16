@@ -12,19 +12,6 @@
 
 #include "philo.h"
 
-
-
-void	*philo_life(void *arg)
-{
-	usleep(500);
-	t_list	*philo;
-	
-	philo = (t_list *)arg;
-	gettimeofday(&philo->stop, NULL);
-	printf("%d %d philo launch\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-	return (0);
-}
-
 void	synch_time(t_list *philo, int nb_philo)
 {
 	int	i;
