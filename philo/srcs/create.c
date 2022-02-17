@@ -51,7 +51,7 @@ t_list	*ft_lstnew(int content, char **argv)
 		return (0);
 	if (tmp)
 	{
-		tmp->start_life = 1;
+		tmp->start_life = 0;
 		tmp->philo = content;
 		tmp->fork = 1;
 		tmp->die = ft_atoi(argv[2]);

@@ -57,17 +57,19 @@ void	start_thread(t_list *philo, int nb_philo)
 {
 	int				i;
 	pthread_t 		*tmp_thread;
+	pthread_mutex_t	thread_mutex;
 
 	i = 0;
 	tmp_thread = malloc(sizeof(pthread_t) * nb_philo);
 	memset(tmp_thread, 0, nb_philo + 1);
+	pthread_mutex_init(&philo->r_mutex, NULL);
+	philo = ft_thread_mutex(philo, nb_philo, thread_mutex);
 	synch_time(philo, nb_philo);
 	if (launch_thread(tmp_thread, philo, nb_philo))
 	{
 		while (i < nb_philo)
 		{
 			pthread_join(tmp_thread[i], NULL);
-			synch_time(philo, nb_philo);
 			i++;
 		}
 	}

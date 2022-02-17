@@ -33,7 +33,7 @@ void ft_msleep(int ms, struct timeval start)
 	end = begin + ms;
 	while (begin < end)
 	{
-		usleep(1);
+		usleep(100);
 		gettimeofday(&stop, NULL);
 		begin = chrono(start, stop, diff);
 	}

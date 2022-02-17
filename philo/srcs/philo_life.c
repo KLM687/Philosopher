@@ -12,28 +12,62 @@
 
 #include "philo.h"
 
+void	*routine2(t_list *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->occ)
+	{
+		thinking(philo);
+		eating(philo);
+		sleeping(philo);
+		i++;
+	}
+	return (0);
+}
+
+void	*routine0(t_list *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->occ)
+	{
+		eating(philo);
+		sleeping(philo);
+		thinking(philo);
+		i++;
+	}
+	return (0);
+}
+
+void	*routine1(t_list *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->occ)
+	{
+		sleeping(philo);
+		thinking(philo);
+		eating(philo);
+		i++;
+	}
+	return (0);
+}
+
 void	*philo_life(void *arg)
 {
 	t_list	*philo;
-	int		i;
 	
 	philo = (t_list *)arg;
-	i = 0;
-	//gettimeofday(&philo->stop, NULL);
-	//printf("%d %d philo is starting\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-	while (i < philo->occ)
-	{
-		pthread_mutex_lock(philo->r_mutex);
-		pthread_mutex_lock(philo->l_mutex);
-		gettimeofday(&philo->stop, NULL);
-		printf("%d %d philo start eating\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-		ft_msleep(philo->eat, philo->start);
-		pthread_mutex_unlock(philo->r_mutex);
-		pthread_mutex_unlock(philo->l_mutex);
-		gettimeofday(&philo->stop, NULL);
-		printf("%d %d philo finish eating\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-		i++;
-	}
-	printf("%d %d philo is leaving\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+	usleep(500);
+	if (philo->start_life == 0)
+		routine0(philo);
+	else if (philo->start_life == 1)
+		routine1(philo);
+	else if (philo->start_life == 2)
+		routine2(philo);
 	return (0);
 }
