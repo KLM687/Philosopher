@@ -48,8 +48,8 @@ t_list	*create_mutex(char **argv, t_list *philo);
 bool 	ft_isdigit(char *str);
 void	*philo_life(void *arg);
 void	eating(t_list *philo);
+void	eating1(t_list *philo);
 void	thinking(t_list *philo);
 void	sleeping(t_list *philo);
-t_list	*ft_thread_mutex(t_list *philo, int nb_philo, pthread_mutex_t thread_mutex);
 
 #endif

@@ -12,21 +12,6 @@
 
 #include "philo.h"
 
-void	*routine2(t_list *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->occ)
-	{
-		thinking(philo);
-		eating(philo);
-		sleeping(philo);
-		i++;
-	}
-	return (0);
-}
-
 void	*routine0(t_list *philo)
 {
 	int	i;
@@ -51,7 +36,7 @@ void	*routine1(t_list *philo)
 	{
 		sleeping(philo);
 		thinking(philo);
-		eating(philo);
+		eating1(philo);
 		i++;
 	}
 	return (0);
@@ -67,7 +52,5 @@ void	*philo_life(void *arg)
 		routine0(philo);
 	else if (philo->start_life == 1)
 		routine1(philo);
-	else if (philo->start_life == 2)
-		routine2(philo);
 	return (0);
 }

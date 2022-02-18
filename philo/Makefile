@@ -6,7 +6,7 @@ OBJS= $(addprefix srcs/,$(SRCS:.c=.o))
 
 CC= gcc
 
-CFLAGS= -Wall -Werror -Wextra
+CFLAGS= -Wall -Werror -Wextra #-g -fsanitize=thread
 
 HEADER= -I includes
 
