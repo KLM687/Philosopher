@@ -30,6 +30,7 @@ typedef struct s_list
 	int				eat;
 	int				sleep;
 	int				occ;
+	pthread_mutex_t	*p_mutex;
 	pthread_mutex_t	r_mutex;
 	pthread_mutex_t	*l_mutex;
 	struct timeval	start;
