@@ -12,6 +12,15 @@
 
 #include "philo.h"
 
+void	fill_dead(t_list *philo)
+{
+	while (philo->dead == 0)
+	{
+		philo->dead = 1;
+		philo = philo->next;
+	}
+}
+
 void	*monitoring(void *arg)
 {
 	t_list	*philo;
@@ -28,8 +37,9 @@ void	*monitoring(void *arg)
 			philo->time = chrono(philo->start1, stop1, diff1);
 			if (philo->time >= philo->die)
 			{
-				philo->dead = 1;
-				printf("%d %d die\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+				fill_dead(philo);
+				gettimeofday(&philo->stop, NULL);
+				printf("%d %d %d die\n",chrono(philo->start, philo->stop, philo->dif),chrono(philo->start1, stop1, diff1), philo->philo);
 				return (0);
 			}
 		}

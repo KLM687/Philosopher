@@ -20,6 +20,8 @@ void	*routine0(t_list *philo)
 	while (i < philo->occ)
 	{
 		eating(philo);
+		if ((i + 1) < philo->occ)
+			philo->finish = 1;
 		sleeping(philo);
 		thinking(philo);
 		i++;
@@ -35,6 +37,8 @@ void	*routine1(t_list *philo)
 	while (i < philo->occ)
 	{
 		eating1(philo);
+		if ((i + 1) < philo->occ)
+			philo->finish = 1;
 		sleeping(philo);
 		thinking(philo);
 		i++;
