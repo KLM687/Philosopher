@@ -69,9 +69,9 @@ t_list *create_list(char **argv, t_list *philo)
 	int		count;
 	t_list	*tmp;
 
-	i = 0;
+	i = 1;
 	count = ft_atoi(argv[1]);
-	while (i < count)
+	while (i <= count)
 	{
 		ft_lstadd_back(&philo, ft_lstnew(i, argv));
 		i++;

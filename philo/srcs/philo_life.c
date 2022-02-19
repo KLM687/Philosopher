@@ -34,9 +34,9 @@ void	*routine1(t_list *philo)
 	i = 0;
 	while (i < philo->occ)
 	{
+		eating1(philo);
 		sleeping(philo);
 		thinking(philo);
-		eating1(philo);
 		i++;
 	}
 	return (0);
@@ -47,7 +47,8 @@ void	*philo_life(void *arg)
 	t_list	*philo;
 	
 	philo = (t_list *)arg;
-	usleep(500);
+	philo->pos = 1;
+	gettimeofday(&philo->start1, NULL);
 	if (philo->start_life == 0)
 		routine0(philo);
 	else if (philo->start_life == 1)

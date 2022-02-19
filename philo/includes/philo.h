@@ -27,13 +27,18 @@ typedef struct s_list
     int				philo;
     int				fork;
 	int				die;
+	int				dead;
+	int				time;
+	int 			pos;
 	int				eat;
 	int				sleep;
 	int				occ;
+	int 			finish;
 	pthread_mutex_t	*p_mutex;
 	pthread_mutex_t	r_mutex;
 	pthread_mutex_t	*l_mutex;
 	struct timeval	start;
+	struct timeval	start1;
 	struct timeval	stop;
 	struct timeval	dif;
     struct s_list 	*next;
@@ -52,5 +57,6 @@ void	eating(t_list *philo);
 void	eating1(t_list *philo);
 void	thinking(t_list *philo);
 void	sleeping(t_list *philo);
+void	*monitoring(void *arg);
 
 #endif
