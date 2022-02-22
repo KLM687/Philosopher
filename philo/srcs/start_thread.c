@@ -49,7 +49,6 @@ bool	launch_thread(pthread_t *tmp_thread, t_list *philo, int nb_philo, pthread_m
 		philo->p_mutex = &pr_mutex;
 		philo = philo->next;
 	}
-	pthread_create(tmp_thread + c, NULL, &monitoring, philo);
 	return (1);
 }
 
@@ -60,13 +59,13 @@ void	start_thread(t_list *philo, int nb_philo)
 	pthread_mutex_t	pr_mutex;
 
 	i = 0;
-	tmp_thread = malloc(sizeof(pthread_t) * nb_philo + 1);
+	tmp_thread = malloc(sizeof(pthread_t) * nb_philo);
 	memset(tmp_thread, 0, nb_philo + 1);
 	synch_time(philo, nb_philo);
 	pthread_mutex_init(&pr_mutex, NULL);
 	if (launch_thread(tmp_thread, philo, nb_philo, pr_mutex))
 	{
-		while (i <= nb_philo)
+		while (i < nb_philo)
 		{
 			pthread_join(tmp_thread[i], NULL);
 			i++;

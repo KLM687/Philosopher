@@ -17,9 +17,7 @@ t_list	*ft_lstlast(t_list *lst)
 	if (lst)
 	{
 		while (lst->next)
-		{
 			lst = lst->next;
-		}
 		return (lst);
 	}
 	else
@@ -42,7 +40,7 @@ void	ft_lstadd_back(t_list **alst, t_list *new)
 		*alst = new;
 }
 
-t_list	*ft_lstnew(int content, char **argv)
+t_list	*ft_lstnew(int content, int argc, char **argv, t_death *death)
 {
 	t_list	*tmp;
 
@@ -55,15 +53,21 @@ t_list	*ft_lstnew(int content, char **argv)
 		tmp->fork = 1;
 		tmp->die = ft_atoi(argv[2]);
 		tmp->eat = ft_atoi(argv[3]);
+		tmp->eating = 0;
+		tmp->end = 0;
 		tmp->sleep = ft_atoi(argv[4]);
-		tmp->occ = ft_atoi(argv[5]);
+		if (argc == 6)
+			tmp->occ = ft_atoi(argv[5]);
+		else
+			tmp->occ = 0;
+		tmp->death = death;
 		tmp->next = NULL;
 		tmp->previous = NULL;
 	}
 	return (tmp);
 }
 
-t_list *create_list(char **argv, t_list *philo)
+t_list *create_list(int argc, char **argv, t_list *philo, t_death *death)
 {
 	int		i;
 	int		count;
@@ -73,7 +77,7 @@ t_list *create_list(char **argv, t_list *philo)
 	count = ft_atoi(argv[1]);
 	while (i <= count)
 	{
-		ft_lstadd_back(&philo, ft_lstnew(i, argv));
+		ft_lstadd_back(&philo, ft_lstnew(i, argc, argv, death));
 		i++;
 	}
 	tmp = philo;

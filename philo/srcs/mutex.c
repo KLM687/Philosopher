@@ -22,10 +22,6 @@ t_list	*create_mutex(char **argv, t_list *philo)
 	while (++i < nb_philo)
 	{
 		pthread_mutex_init(&philo->r_mutex, NULL);
-		if ((philo->philo % 2) == 0)
-			philo->start_life = 0;
-		else
-			philo->start_life = 1;
 		philo->next->l_mutex = &philo->r_mutex;
 		philo = philo->next;
 	}

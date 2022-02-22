@@ -16,9 +16,9 @@ pthread_mutex_t mutex;
 
 int	parse(int argc, char **argv)
 {
-	if (argc != 6)
+	if (argc != 6 && argc != 5)
 		return (0);
-	if (ft_atoi(argv[1]) < 3 || !ft_isdigit(argv[1]))
+	if (ft_atoi(argv[1]) <= 0 || !ft_isdigit(argv[1]))
 		return (0);
 	if (ft_atoi(argv[2]) <= 0 || !ft_isdigit(argv[2]))
 		return (0);
@@ -26,8 +26,11 @@ int	parse(int argc, char **argv)
 		return (0);
 	if (ft_atoi(argv[4]) <= 0 || !ft_isdigit(argv[4]))
 		return (0);
-	if (ft_atoi(argv[5]) <= 0 || !ft_isdigit(argv[5]))
-		return (0);
+	if (argc == 6)
+	{
+		if (ft_atoi(argv[5]) <= 0 || !ft_isdigit(argv[5]))
+			return (0);
+	}
 	return (1);
 }
 
@@ -51,14 +54,17 @@ void	ft_lstclear(t_list *lst, int nb_philo)
 int main(int argc, char **argv)
 {
     t_list	*philo;
+	t_death	*death;
 
 	philo = NULL;
+	death = malloc(sizeof(t_death) * 1);
+	death->death = 0;
     if (!parse(argc, argv))
     {
         printf("error in argument\n");
         return (0);
     }
-    philo = create_list(argv, philo);
+    philo = create_list(argc, argv, philo, death);
 	philo = create_mutex(argv, philo);
 	start_thread(philo, ft_atoi(argv[1]));
 	ft_lstclear(philo, ft_atoi(argv[1]));

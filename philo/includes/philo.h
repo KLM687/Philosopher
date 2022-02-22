@@ -21,31 +21,34 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
+typedef struct s_death
+{
+	int death;
+}	t_death;
+
 typedef struct s_list
 {
-	int				start_life;
     int				philo;
     int				fork;
 	int				die;
-	int				dead;
-	int				time;
-	int 			pos;
 	int				eat;
+	int 			eating;
 	int				sleep;
 	int				occ;
-	int 			finish;
+	int				dead;
+	int 			end;
 	pthread_mutex_t	*p_mutex;
 	pthread_mutex_t	r_mutex;
 	pthread_mutex_t	*l_mutex;
 	struct timeval	start;
-	struct timeval	start1;
 	struct timeval	stop;
 	struct timeval	dif;
     struct s_list 	*next;
     struct s_list 	*previous;
+	t_death	*death;
 }   t_list;
 
-t_list	*create_list(char **argv, t_list *philo);
+t_list	*create_list(int argc, char **argv, t_list *philo, t_death *death);
 int		ft_atoi(const char *str);
 void	start_thread(t_list *philo, int nb_philo);
 void 	ft_msleep(int ms, struct timeval start);
@@ -57,6 +60,5 @@ void	eating(t_list *philo);
 void	eating1(t_list *philo);
 void	thinking(t_list *philo);
 void	sleeping(t_list *philo);
-void	*monitoring(void *arg);
 
 #endif
