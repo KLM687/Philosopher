@@ -21,27 +21,26 @@ void	*check_death(void *arg)
 	struct timeval begin;
 	struct timeval stop;
 	struct timeval dif;
-
-	gettimeofday(&begin, NULL);
+	begin = philo->start;
 	death = 0;
-	while (death < philo->die)
+	while (death < philo->die && !philo->death->death)
 	{
 		if (philo->end == 1)
 			return (0);
-		else if (philo->eating == 0)
-			death = 0;
-		else 
+		while (!philo->eating && !philo->death->death)
 		{
 			gettimeofday(&stop, NULL);
 			death = chrono(begin, stop, dif);
-			if (death >= philo->die)
+			if (death >= philo->die && !philo->death->death)
 			{
-				gettimeofday(&philo->stop, NULL);
-				printf("%d %d died\n",chrono(philo->start, philo->stop, dif), philo->philo);
+				gettimeofday(&stop, NULL);
+				if(!philo->death->death)
+					printf("%d %d died\n",chrono(philo->start, stop, dif), philo->philo);
 				philo->death->death = 1;
 			}
 		}
-		usleep(100); 
+		gettimeofday(&begin, NULL);
+		usleep(500);
 	}
 	return (0);
 }

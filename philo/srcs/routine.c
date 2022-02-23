@@ -12,50 +12,66 @@
 
 #include "philo.h"
 
-void	eating(t_list *philo)
+int	eating(t_list *philo)
 {
 	pthread_mutex_lock(&philo->r_mutex);
 	gettimeofday(&philo->stop, NULL);
-	printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+	if (!philo->death->death)
+		printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
 	pthread_mutex_lock(philo->l_mutex);
 	philo->eating = 1;
 	gettimeofday(&philo->stop, NULL);
-	printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-	printf("%d %d is eating\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+	if (!philo->death->death)
+	{
+		printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+		printf("%d %d is eating\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+	}
 	gettimeofday(&philo->stop, NULL);
 	ft_msleep(philo->eat, philo->start);
 	philo->eating = 0;
 	pthread_mutex_unlock(&philo->r_mutex);
 	pthread_mutex_unlock(philo->l_mutex);
+	return (1);
 }
 
-void	eating1(t_list *philo)
+int	eating1(t_list *philo)
 {
 	usleep(100);
 	pthread_mutex_lock(philo->l_mutex);
 	gettimeofday(&philo->stop, NULL);
-	printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+	if (!philo->death->death)
+		printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
 	pthread_mutex_lock(&philo->r_mutex);
 	philo->eating = 1;
 	gettimeofday(&philo->stop, NULL);
-	printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-	printf("%d %d is eating\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+	if (!philo->death->death)
+	{
+		printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+		printf("%d %d is eating\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+	}
 	gettimeofday(&philo->stop, NULL);
 	ft_msleep(philo->eat, philo->start);
 	philo->eating = 0;
 	pthread_mutex_unlock(philo->l_mutex);
 	pthread_mutex_unlock(&philo->r_mutex);
+	return (1);
 }
 
-void	thinking(t_list *philo)
+int	thinking(t_list *philo)
 {
 	gettimeofday(&philo->stop, NULL);
-	printf("%d %d is thinking\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+	if (!philo->death->death)
+		printf("%d %d is thinking\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+	return (1);
 }
 
-void	sleeping(t_list *philo)
+int	sleeping(t_list *philo)
 {
 	gettimeofday(&philo->stop, NULL);
-	printf("%d %d is sleeping\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-	ft_msleep(philo->sleep, philo->start);
+	if (!philo->death->death)
+	{
+		printf("%d %d is sleeping\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+		ft_msleep(philo->sleep, philo->start);
+	}
+	return (1);
 }

@@ -68,5 +68,6 @@ int main(int argc, char **argv)
 	philo = create_mutex(argv, philo);
 	start_thread(philo, ft_atoi(argv[1]));
 	ft_lstclear(philo, ft_atoi(argv[1]));
+	free(death);
 	return (0);
 }
