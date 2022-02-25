@@ -12,8 +12,6 @@
 
 #include "philo.h"
 
-pthread_mutex_t mutex;
-
 int	parse(int argc, char **argv)
 {
 	if (argc != 6 && argc != 5)
@@ -54,20 +52,16 @@ void	ft_lstclear(t_list *lst, int nb_philo)
 int main(int argc, char **argv)
 {
     t_list	*philo;
-	t_death	*death;
 
 	philo = NULL;
-	death = malloc(sizeof(t_death) * 1);
-	death->death = 0;
     if (!parse(argc, argv))
     {
         printf("error in argument\n");
         return (0);
     }
-    philo = create_list(argc, argv, philo, death);
+    philo = create_list(argc, argv, philo);
 	philo = create_mutex(argv, philo);
 	start_thread(philo, ft_atoi(argv[1]));
 	ft_lstclear(philo, ft_atoi(argv[1]));
-	free(death);
 	return (0);
 }

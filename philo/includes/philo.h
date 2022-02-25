@@ -21,11 +21,6 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
-typedef struct s_death
-{
-	int death;
-}	t_death;
-
 typedef struct s_list
 {
     int				philo;
@@ -35,9 +30,9 @@ typedef struct s_list
 	int 			eating;
 	int				sleep;
 	int				occ;
-	int				dead;
+	bool			dead;
 	int 			end;
-	pthread_mutex_t	death_mutex;
+	pthread_mutex_t	local_mutex;
 	pthread_mutex_t	*p_mutex;
 	pthread_mutex_t	r_mutex;
 	pthread_mutex_t	*l_mutex;
@@ -46,10 +41,9 @@ typedef struct s_list
 	struct timeval	dif;
     struct s_list 	*next;
     struct s_list 	*previous;
-	t_death	*death;
 }   t_list;
 
-t_list	*create_list(int argc, char **argv, t_list *philo, t_death *death);
+t_list	*create_list(int argc, char **argv, t_list *philo);
 int		ft_atoi(const char *str);
 void	start_thread(t_list *philo, int nb_philo);
 void 	ft_msleep(int ms, struct timeval start);
@@ -57,9 +51,8 @@ int		chrono(struct timeval start, struct timeval stop, struct timeval diff);
 t_list	*create_mutex(char **argv, t_list *philo);
 bool 	ft_isdigit(char *str);
 void	*philo_life(void *arg);
-int		eating(t_list *philo);
-int		eating1(t_list *philo);
-int		thinking(t_list *philo);
-int		sleeping(t_list *philo);
+bool	eat(t_list *philo);
+bool	sleep_think(t_list *philo);
+bool	ft_print(char *str, t_list *philo, int p);
 
 #endif

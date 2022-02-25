@@ -22,7 +22,7 @@ t_list	*create_mutex(char **argv, t_list *philo)
 	while (++i < nb_philo)
 	{
 		pthread_mutex_init(&philo->r_mutex, NULL);
-		pthread_mutex_init(&philo->death_mutex, NULL);
+		pthread_mutex_init(&philo->local_mutex, NULL);
 		philo->next->l_mutex = &philo->r_mutex;
 		philo = philo->next;
 	}

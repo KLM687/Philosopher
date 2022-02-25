@@ -12,66 +12,42 @@
 
 #include "philo.h"
 
-int	eating(t_list *philo)
+bool	eat(t_list *philo)
 {
 	pthread_mutex_lock(&philo->r_mutex);
-	gettimeofday(&philo->stop, NULL);
-	if (!philo->death->death)
-		printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
+	pthread_mutex_lock(philo->p_mutex);	
+	if (!ft_print("has taken a fork", philo, 1))
+		return (0);
+	pthread_mutex_unlock(philo->p_mutex);
 	pthread_mutex_lock(philo->l_mutex);
+	pthread_mutex_lock(&philo->local_mutex);
 	philo->eating = 1;
-	gettimeofday(&philo->stop, NULL);
-	if (!philo->death->death)
-	{
-		printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-		printf("%d %d is eating\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-	}
-	gettimeofday(&philo->stop, NULL);
+	pthread_mutex_unlock(&philo->local_mutex);
+	pthread_mutex_lock(philo->p_mutex);
+	if(!ft_print("has taken a fork", philo, 2))
+		return (0);
+	pthread_mutex_unlock(philo->p_mutex);
 	ft_msleep(philo->eat, philo->start);
+	pthread_mutex_lock(&philo->local_mutex);
 	philo->eating = 0;
+	pthread_mutex_unlock(&philo->local_mutex);
 	pthread_mutex_unlock(&philo->r_mutex);
 	pthread_mutex_unlock(philo->l_mutex);
 	return (1);
 }
 
-int	eating1(t_list *philo)
-{
-	usleep(100);
-	pthread_mutex_lock(philo->l_mutex);
-	gettimeofday(&philo->stop, NULL);
-	if (!philo->death->death)
-		printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-	pthread_mutex_lock(&philo->r_mutex);
-	philo->eating = 1;
-	gettimeofday(&philo->stop, NULL);
-	if (!philo->death->death)
-	{
-		printf("%d %d has taken a fork\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-		printf("%d %d is eating\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-	}
-	gettimeofday(&philo->stop, NULL);
-	ft_msleep(philo->eat, philo->start);
-	philo->eating = 0;
-	pthread_mutex_unlock(philo->l_mutex);
-	pthread_mutex_unlock(&philo->r_mutex);
-	return (1);
-}
-
-int	thinking(t_list *philo)
+bool	sleep_think(t_list *philo)
 {
 	gettimeofday(&philo->stop, NULL);
-	if (!philo->death->death)
-		printf("%d %d is thinking\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-	return (1);
-}
-
-int	sleeping(t_list *philo)
-{
+	pthread_mutex_lock(philo->p_mutex);
+	if(!ft_print("is sleeping", philo, 1))
+		return (0);
+	pthread_mutex_unlock(philo->p_mutex);
+	ft_msleep(philo->sleep, philo->start);
 	gettimeofday(&philo->stop, NULL);
-	if (!philo->death->death)
-	{
-		printf("%d %d is sleeping\n",chrono(philo->start, philo->stop, philo->dif), philo->philo);
-		ft_msleep(philo->sleep, philo->start);
-	}
+	pthread_mutex_lock(philo->p_mutex);
+	if (!ft_print("is thinking", philo, 1))
+		return (0);
+	pthread_mutex_unlock(philo->p_mutex);
 	return (1);
 }
