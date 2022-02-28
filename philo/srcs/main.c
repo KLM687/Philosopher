@@ -49,6 +49,19 @@ void	ft_lstclear(t_list *lst, int nb_philo)
 	}
 }
 
+bool	one_philo(char **argv)
+{
+	struct timeval	start;
+	
+	gettimeofday(&start, NULL);
+	if (ft_atoi(argv[1]) == 1)
+	{
+		printf("%d %d die\n", 1, ft_atoi(argv[2]));
+		return (1);
+	}
+	return (0);
+}
+
 int main(int argc, char **argv)
 {
     t_list	*philo;
@@ -61,6 +74,8 @@ int main(int argc, char **argv)
         printf("error in argument\n");
         return (0);
     }
+	if (one_philo(argv))
+		return (0);
 	p_mutex = malloc(sizeof(pthread_mutex_t) * 1);
 	m_mutex = malloc(sizeof(pthread_mutex_t) * 1);
 	pthread_mutex_init(p_mutex, NULL);
