@@ -18,10 +18,10 @@ bool	ft_print(char *str, t_list *philo, int p)
 
 	gettimeofday(&philo->stop, NULL);
 	time = chrono(philo->start, philo->stop, philo->dif);
-	pthread_mutex_lock(&philo->local_mutex);
+	//pthread_mutex_lock(&philo->local_mutex);
 	if (philo->dead)
 		return (0);
-	pthread_mutex_lock(&philo->local_mutex);
+	//pthread_mutex_lock(&philo->local_mutex);
 	printf("%d %d %s\n", time, philo->philo, str);
 	if (p == 2)
 		printf("%d %d %s\n", time, philo->philo, "is eating");

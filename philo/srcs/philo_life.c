@@ -60,26 +60,26 @@ void	*check_death(void *arg)
 
 int	routine(t_list *philo)
 {
-	pthread_t	death_thread;
+	//pthread_t	death_thread;
 	int			i;
 
 	i = 0;
-	pthread_create(&death_thread, NULL, &check_death, philo);
-	pthread_detach(death_thread);
-	while (i < philo->occ)
+	//pthread_create(&death_thread, NULL, &check_death, philo);
+	//pthread_detach(death_thread);
+	while (i <= philo->occ)
 	{
 		if (!eat(philo))
 			return (0);
-		if (!sleep_think(philo))
-			return (0);
+		//if (!sleep_think(philo))
+		//	return (0);
 		i++;
 		if (philo->occ == 0)
 			i = -1;
 	}
-	pthread_mutex_lock(&philo->local_mutex);
-	philo->end = 1;
-	pthread_mutex_lock(&philo->local_mutex);
-	return usleep(1000), (1);
+	//pthread_mutex_lock(&philo->local_mutex);
+	//philo->end = 1;
+	//pthread_mutex_lock(&philo->local_mutex);
+	return (1);
 }
 
 void	*philo_life(void *arg)
@@ -91,9 +91,9 @@ void	*philo_life(void *arg)
 	if ((philo->philo % 2) == 0)
 		usleep(100);
 	routine(philo);
-	pthread_mutex_lock(&philo->local_mutex);
-	philo->end = 1;
-	pthread_mutex_lock(&philo->local_mutex);
-	usleep(1000);
+	//pthread_mutex_lock(&philo->local_mutex);
+	//philo->end = 1;
+	//pthread_mutex_lock(&philo->local_mutex);
+	//usleep(1000);
 	return (0);
 }
