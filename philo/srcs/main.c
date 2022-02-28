@@ -52,6 +52,7 @@ void	ft_lstclear(t_list *lst, int nb_philo)
 int main(int argc, char **argv)
 {
     t_list	*philo;
+	pthread_mutex_t	*p_mutex;
 
 	philo = NULL;
     if (!parse(argc, argv))
@@ -59,8 +60,10 @@ int main(int argc, char **argv)
         printf("error in argument\n");
         return (0);
     }
+	p_mutex = malloc(sizeof(pthread_mutex_t) * 1);
+	pthread_mutex_init(p_mutex, NULL);
     philo = create_list(argc, argv, philo);
-	philo = create_mutex(argv, philo);
+	philo = create_mutex(argv, philo, p_mutex);
 	start_thread(philo, ft_atoi(argv[1]));
 	ft_lstclear(philo, ft_atoi(argv[1]));
 	return (0);

@@ -48,7 +48,7 @@ int		ft_atoi(const char *str);
 void	start_thread(t_list *philo, int nb_philo);
 void 	ft_msleep(int ms, struct timeval start);
 int		chrono(struct timeval start, struct timeval stop, struct timeval diff);
-t_list	*create_mutex(char **argv, t_list *philo);
+t_list	*create_mutex(char **argv, t_list *philo, pthread_mutex_t *p_mutex);
 bool 	ft_isdigit(char *str);
 void	*philo_life(void *arg);
 bool	eat(t_list *philo);

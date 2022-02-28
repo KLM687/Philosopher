@@ -79,6 +79,7 @@ int	routine(t_list *philo)
 	//pthread_mutex_lock(&philo->local_mutex);
 	//philo->end = 1;
 	//pthread_mutex_lock(&philo->local_mutex);
+	//printf("%d end\n", philo->philo);
 	return (1);
 }
 
