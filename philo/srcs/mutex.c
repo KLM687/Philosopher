@@ -12,7 +12,8 @@
 
 #include "philo.h"
 
-t_list	*create_mutex(char **argv, t_list *philo, pthread_mutex_t *p_mutex, pthread_mutex_t *m_mutex)
+t_list	*create_mutex(char **argv, t_list *philo,
+			pthread_mutex_t *p_mutex, pthread_mutex_t *m_mutex)
 {
 	int	i;
 	int	nb_philo;
@@ -29,4 +30,3 @@ t_list	*create_mutex(char **argv, t_list *philo, pthread_mutex_t *p_mutex, pthre
 	}
 	return (philo);
 }
-

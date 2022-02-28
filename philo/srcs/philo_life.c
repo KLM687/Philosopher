@@ -12,11 +12,11 @@
 
 #include "philo.h"
 
-int routine(t_list *philo)
+int	routine(t_list *philo)
 {
 	while (1)
 	{
-		if(!eat(philo))
+		if (!eat(philo))
 			return (1);
 		sleep_think(philo);
 		pthread_mutex_lock(philo->m_mutex);
@@ -36,7 +36,7 @@ int routine(t_list *philo)
 	return (1);
 }
 
-int routine1(t_list *philo)
+int	routine1(t_list *philo)
 {
 	usleep(500);
 	while (1)
@@ -61,9 +61,9 @@ int routine1(t_list *philo)
 	return (1);
 }
 
-void *philo_life(void *arg)
+void	*philo_life(void *arg)
 {
-	t_list *philo;
+	t_list	*philo;
 
 	philo = (t_list *)arg;
 	philo->clock_start = philo->start;

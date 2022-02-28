@@ -14,8 +14,8 @@
 
 void	synch_time(t_list *philo, int nb_philo)
 {
-	int	i;
-	struct timeval origin_start;
+	int				i;
+	struct timeval	origin_start;
 
 	i = 0;
 	gettimeofday(&origin_start, NULL);
@@ -29,8 +29,8 @@ void	synch_time(t_list *philo, int nb_philo)
 
 bool	launch_thread(pthread_t *tmp_thread, t_list *philo, int nb_philo)
 {
-	int i;
-	int c;
+	int	i;
+	int	c;
 
 	i = -1;
 	c = 0;
@@ -53,7 +53,7 @@ bool	launch_thread(pthread_t *tmp_thread, t_list *philo, int nb_philo)
 void	start_thread(t_list *philo, int nb_philo)
 {
 	int				i;
-	pthread_t 		*tmp_thread;
+	pthread_t		*tmp_thread;
 
 	i = 0;
 	tmp_thread = malloc(sizeof(pthread_t) * nb_philo);

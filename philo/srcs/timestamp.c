@@ -21,12 +21,12 @@ int	chrono(struct timeval start, struct timeval stop, struct timeval diff)
 	return (diff.tv_usec + diff.tv_sec);
 }
 
-void ft_msleep(int ms, struct timeval start)
+void	ft_msleep(int ms, struct timeval start)
 {
-	struct timeval stop;
-	struct timeval diff;
-	size_t	begin;
-	size_t	end;
+	struct timeval	stop;
+	struct timeval	diff;
+	size_t			begin;
+	size_t			end;
 
 	gettimeofday(&stop, NULL);
 	begin = chrono(start, stop, diff);

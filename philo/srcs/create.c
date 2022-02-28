@@ -65,7 +65,7 @@ t_list	*ft_lstnew(int content, int argc, char **argv)
 	return (tmp);
 }
 
-t_list *create_list(int argc, char **argv, t_list *philo)
+t_list	*create_list(int argc, char **argv, t_list *philo)
 {
 	int		i;
 	int		count;

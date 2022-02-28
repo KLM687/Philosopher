@@ -38,10 +38,10 @@ bool	ft_print(char *str, t_list *philo, int p)
 	return (1);
 }
 
-bool 	ft_isdigit(char *str)
+bool	ft_isdigit(char *str)
 {
 	int	i;
-	int c;
+	int	c;
 
 	i = 0;
 	while (str[i] != '\0')

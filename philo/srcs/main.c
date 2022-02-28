@@ -34,8 +34,8 @@ int	parse(int argc, char **argv)
 
 void	ft_lstclear(t_list *lst, int nb_philo)
 {
-	t_list *tmp;
-	int i;
+	t_list	*tmp;
+	int		i;
 
 	i = 0;
 	while (i < nb_philo)
@@ -52,7 +52,7 @@ void	ft_lstclear(t_list *lst, int nb_philo)
 bool	one_philo(char **argv)
 {
 	struct timeval	start;
-	
+
 	gettimeofday(&start, NULL);
 	if (ft_atoi(argv[1]) == 1)
 	{
@@ -62,29 +62,31 @@ bool	one_philo(char **argv)
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    t_list	*philo;
+	t_list			*philo;
 	pthread_mutex_t	*p_mutex;
 	pthread_mutex_t	*m_mutex;
 
 	philo = NULL;
-    if (!parse(argc, argv))
-    {
-        printf("error in argument\n");
-        return (0);
-    }
+	if (!parse(argc, argv))
+	{
+		printf("error in argument\n");
+		return (0);
+	}
 	if (one_philo(argv))
 		return (0);
 	p_mutex = malloc(sizeof(pthread_mutex_t) * 1);
+	if (!p_mutex)
+		return (0);
 	m_mutex = malloc(sizeof(pthread_mutex_t) * 1);
+	if (!m_mutex)
+		return (0);
 	pthread_mutex_init(p_mutex, NULL);
 	pthread_mutex_init(m_mutex, NULL);
-    philo = create_list(argc, argv, philo);
+	philo = create_list(argc, argv, philo);
 	philo = create_mutex(argv, philo, p_mutex, m_mutex);
 	start_thread(philo, ft_atoi(argv[1]));
 	ft_lstclear(philo, ft_atoi(argv[1]));
-	free(p_mutex);
-	free(m_mutex);
-	return (0);
+	return (free(m_mutex), free(p_mutex), (0));
 }

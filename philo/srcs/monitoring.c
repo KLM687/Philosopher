@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-t_list 	*stop_all(t_list *philo)
+t_list	*stop_all(t_list *philo)
 {
 	while (!philo->end)
 	{
@@ -22,25 +22,31 @@ t_list 	*stop_all(t_list *philo)
 	return (philo);
 }
 
+void	clock_time(t_list *philo, int clock,
+			struct timeval stop, struct timeval diff)
+{
+	if (clock >= philo->die)
+	{
+		pthread_mutex_lock(philo->p_mutex);
+		printf("%d %d die\n", chrono(philo->start, stop, diff), philo->philo);
+		pthread_mutex_unlock(philo->p_mutex);
+		stop_all(philo);
+	}
+}
+
 bool	monitoring(t_list *philo)
 {
-	int		clock;
-	struct	timeval stop;
-	struct	timeval diff;
+	int				clock;
+	struct timeval	stop;
+	struct timeval	diff;
 
 	usleep(10000);
 	while (1)
 	{
 		gettimeofday(&stop, NULL);
 		pthread_mutex_lock(philo->m_mutex);
-		clock =	chrono(philo->clock_start, stop, diff);
-		if (clock >= philo->die)
-		{
-			pthread_mutex_lock(philo->p_mutex);
-			printf("%d %d die\n", chrono(philo->start, stop, diff), philo->philo);
-			pthread_mutex_unlock(philo->p_mutex);
-			stop_all(philo);
-		}
+		clock = chrono(philo->clock_start, stop, diff);
+		clock_time(philo, clock, stop, diff);
 		if (philo->end)
 		{
 			pthread_mutex_unlock(philo->m_mutex);
