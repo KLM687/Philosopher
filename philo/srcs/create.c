@@ -54,12 +54,11 @@ t_list	*ft_lstnew(int content, int argc, char **argv)
 		tmp->die = ft_atoi(argv[2]);
 		tmp->eat = ft_atoi(argv[3]);
 		tmp->eating = 0;
-		tmp->end = 0;
 		tmp->sleep = ft_atoi(argv[4]);
 		tmp->occ = 0;
 		if (argc == 6)
 			tmp->occ = ft_atoi(argv[5]);
-		tmp->dead = 0;
+		tmp->end = 0;
 		tmp->next = NULL;
 		tmp->previous = NULL;
 	}

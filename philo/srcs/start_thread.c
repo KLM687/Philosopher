@@ -61,6 +61,11 @@ void	start_thread(t_list *philo, int nb_philo)
 	synch_time(philo, nb_philo);
 	if (launch_thread(tmp_thread, philo, nb_philo))
 	{
+		while (1)
+		{
+			if (!monitoring(philo))
+				break ;
+		}
 		while (i < nb_philo)
 		{
 			pthread_join(tmp_thread[i], NULL);

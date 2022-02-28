@@ -12,89 +12,67 @@
 
 #include "philo.h"
 
-t_list 	*stop_all(t_list *philo)
+int routine(t_list *philo)
 {
-	while (!philo->dead)
+	while (1)
 	{
-		philo->dead = 1;
-		philo = philo->next;
-	}
-	return (philo);
-}
-
-void	*check_death(void *arg)
-{
-	int			time;
-	t_list		*philo;
-	
-	philo = (t_list *)arg;
-	struct timeval begin;
-	struct timeval stop;
-	struct timeval dif;
-	begin = philo->start;
-	time = 0;
-	pthread_mutex_lock(&philo->local_mutex);
-	while(!philo->end)
-	{
-		while (!philo->eating)
+		if(!eat(philo))
+			return (1);
+		sleep_think(philo);
+		pthread_mutex_lock(philo->m_mutex);
+		if (philo->end)
 		{
-			gettimeofday(&stop, NULL);
-			pthread_mutex_unlock(&philo->local_mutex);
-			time = chrono(begin, stop, dif);
-			if (time >= philo->die)
-			{
-				pthread_mutex_lock(philo->p_mutex);
-				printf("%d %d die\n", philo->philo, chrono(philo->start, philo->stop, philo->dif));
-				philo = stop_all(philo);
-				pthread_mutex_unlock(philo->p_mutex);
-				return (0);
-			}
-			usleep (500);
-			pthread_mutex_lock(&philo->local_mutex);
+			pthread_mutex_unlock(philo->m_mutex);
+			return (1);
 		}
-		gettimeofday(&begin, NULL);
+		pthread_mutex_unlock(philo->m_mutex);
+		if (philo->occ != 0)
+		{
+			philo->eating++;
+			if (philo->eating == philo->occ)
+				return (0);
+		}	
 	}
-	pthread_mutex_unlock(&philo->local_mutex);
-	return (0);
-}
-
-int	routine(t_list *philo)
-{
-	//pthread_t	death_thread;
-	int			i;
-
-	i = 0;
-	//pthread_create(&death_thread, NULL, &check_death, philo);
-	//pthread_detach(death_thread);
-	while (i <= philo->occ)
-	{
-		if (!eat(philo))
-			return (0);
-		//if (!sleep_think(philo))
-		//	return (0);
-		i++;
-		if (philo->occ == 0)
-			i = -1;
-	}
-	//pthread_mutex_lock(&philo->local_mutex);
-	//philo->end = 1;
-	//pthread_mutex_lock(&philo->local_mutex);
-	//printf("%d end\n", philo->philo);
 	return (1);
 }
 
-void	*philo_life(void *arg)
+int routine1(t_list *philo)
 {
-	t_list		*philo;
-	
+	usleep(500);
+	while (1)
+	{
+		if (!eat1(philo))
+			return (1);
+		sleep_think(philo);
+		pthread_mutex_lock(philo->m_mutex);
+		if (philo->end)
+		{
+			pthread_mutex_unlock(philo->m_mutex);
+			return (1);
+		}
+		pthread_mutex_unlock(philo->m_mutex);
+		if (philo->occ != 0)
+		{
+			philo->eating++;
+			if (philo->eating == philo->occ)
+				return (0);
+		}
+	}
+	return (1);
+}
+
+void *philo_life(void *arg)
+{
+	t_list *philo;
+
 	philo = (t_list *)arg;
-	philo->end = 0;
+	philo->clock_start = philo->start;
 	if ((philo->philo % 2) == 0)
-		usleep(100);
-	routine(philo);
-	//pthread_mutex_lock(&philo->local_mutex);
-	//philo->end = 1;
-	//pthread_mutex_lock(&philo->local_mutex);
-	//usleep(1000);
+		routine(philo);
+	else
+		routine1(philo);
+	pthread_mutex_lock(philo->m_mutex);
+	philo->end = 1;
+	pthread_mutex_unlock(philo->m_mutex);
 	return (0);
 }

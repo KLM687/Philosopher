@@ -53,6 +53,7 @@ int main(int argc, char **argv)
 {
     t_list	*philo;
 	pthread_mutex_t	*p_mutex;
+	pthread_mutex_t	*m_mutex;
 
 	philo = NULL;
     if (!parse(argc, argv))
@@ -61,10 +62,14 @@ int main(int argc, char **argv)
         return (0);
     }
 	p_mutex = malloc(sizeof(pthread_mutex_t) * 1);
+	m_mutex = malloc(sizeof(pthread_mutex_t) * 1);
 	pthread_mutex_init(p_mutex, NULL);
+	pthread_mutex_init(m_mutex, NULL);
     philo = create_list(argc, argv, philo);
-	philo = create_mutex(argv, philo, p_mutex);
+	philo = create_mutex(argv, philo, p_mutex, m_mutex);
 	start_thread(philo, ft_atoi(argv[1]));
 	ft_lstclear(philo, ft_atoi(argv[1]));
+	free(p_mutex);
+	free(m_mutex);
 	return (0);
 }
