@@ -27,14 +27,16 @@ bool	ft_print(char *str, t_list *philo, int p)
 	pthread_mutex_unlock(philo->m_mutex);
 	pthread_mutex_lock(philo->p_mutex);
 	printf("%d %d %s\n", time, philo->philo, str);
+	pthread_mutex_unlock(philo->p_mutex);
 	if (p == 2)
 	{
+		pthread_mutex_lock(philo->p_mutex);
 		printf("%d %d %s\n", time, philo->philo, "is eating");
+		pthread_mutex_unlock(philo->p_mutex);
 		pthread_mutex_lock(philo->m_mutex);
 		gettimeofday(&philo->clock_start, NULL);
 		pthread_mutex_unlock(philo->m_mutex);
 	}
-	pthread_mutex_unlock(philo->p_mutex);
 	return (1);
 }
 

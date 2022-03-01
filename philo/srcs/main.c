@@ -56,7 +56,7 @@ bool	one_philo(char **argv)
 	gettimeofday(&start, NULL);
 	if (ft_atoi(argv[1]) == 1)
 	{
-		printf("%d %d die\n", 1, ft_atoi(argv[2]));
+		printf("%d %d die\n", ft_atoi(argv[2]), 1);
 		return (1);
 	}
 	return (0);
